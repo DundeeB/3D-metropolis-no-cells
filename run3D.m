@@ -1,15 +1,15 @@
-rho_H_arr = [0.95 1 0.6 0.65 0.7 0.8:0.05:1];
-I = ones(1, length(rho_H_arr)-2);
-h_arr = [1 1 0.9*I];
-I = ones(1, length(h_arr));
-n_row_arr = 2*50*I;
-n_col_arr = 2*18*I;
+rho_H_arr = [0.95];
+% I = ones(1, length(rho_H_arr)-2);
+h_arr = [0.8575];
+% I = ones(1, length(h_arr));
+n_row_arr = [1*50];%*I;
+n_col_arr = [1/2*18];%*I;
 
 IC_pool = {'square','triangle','AF_triangle'};
 Initial_Conditions_arr(1:length(n_col_arr)) = {IC_pool{3}};
 
 code_dir = pwd;
-father_dir = 'C:\Users\Daniel\OneDrive - Technion\simulation-results\';
+father_dir = '..\simulation-results\';
 
 for j = 1:length(n_col_arr)
     tic;
@@ -64,7 +64,7 @@ for j = 1:length(n_col_arr)
         error('too many spheres');
     end
 
-    N_real  = 1e4*N/9*5;
+    N_real  = 100;  % 1e4*N/9*5;  % TBD!
     L = state.H;
     f = 0.2;
     step_size = f*(sqrt((state.cyclic_boundary(2)/n_row)^2+(state.cyclic_boundary(1)/n_col)^2)-2*state.rad);
@@ -93,6 +93,7 @@ for j = 1:length(n_col_arr)
         end
     end
     %% write first and last sphere
+    addpath([code_dir '/../post_process/']);
     subplot(1,2,2); 
     plot_spheres(state); 
     title([num2str(i) ' step. Acceptance rate: ' ...
@@ -108,6 +109,6 @@ for j = 1:length(n_col_arr)
     toc;
     %%
     tic;
-    post_process([father_dir sim_name],false, 'output_psi14_psi23_b1_N_sp_100',100);
+    post_process([father_dir sim_name],false, 'output_psi14_psi23_b1_N_sp');
     toc;
 end
