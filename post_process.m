@@ -1,5 +1,4 @@
 function [] = post_process(lib, plot_flag, output_file_name, N_realizations)
-addpath('../post_process/')
 display(['Post processing for library: ' lib]);
 switch nargin
     case 4
